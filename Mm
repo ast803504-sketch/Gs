@@ -1,0 +1,324 @@
+-- ================= ================= =================
+-- سكربت ماب الكيبورد - التختيم الذكي التلقائي (Auto Farm)
+-- الحقوق الرسمية: إبراهيم الفضل | RTX
+-- ================= ================= =================
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+-- إنشاء الواجهة الرئيسية
+local MainGui = Instance.new("ScreenGui")
+MainGui.Name = "RTX_KeyboardScript_Smart"
+MainGui.ResetOnSpawn = false
+MainGui.Parent = PlayerGui
+
+-- ================= ================= =================
+-- 1. شاشة تسجيل الدخول الفخمة
+-- ================= ================= =================
+
+local LoginFrame = Instance.new("Frame")
+LoginFrame.Name = "LoginFrame"
+LoginFrame.Size = UDim2.new(0, 380, 0, 440)
+LoginFrame.Position = UDim2.new(0.5, -190, 0.5, -220)
+LoginFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
+LoginFrame.BorderSizePixel = 0
+LoginFrame.Parent = MainGui
+
+local LoginCorner = Instance.new("UICorner")
+LoginCorner.CornerRadius = UDim.new(0, 16)
+LoginCorner.Parent = LoginFrame
+
+local LoginStroke = Instance.new("UIStroke")
+LoginStroke.Color = Color3.fromRGB(0, 200, 255)
+LoginStroke.Thickness = 2
+LoginStroke.Parent = LoginFrame
+
+local TitleLabel = Instance.new("TextLabel")
+TitleLabel.Size = UDim2.new(1, 0, 0, 50)
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Text = "نظام التحقق | RTX SYSTEM"
+TitleLabel.TextColor3 = Color3.fromRGB(0, 200, 255)
+TitleLabel.TextSize = 20
+TitleLabel.Font = Enum.Font.GothamBold
+TitleLabel.Parent = LoginFrame
+
+local AvatarImage = Instance.new("ImageLabel")
+AvatarImage.Size = UDim2.new(0, 100, 0, 100)
+AvatarImage.Position = UDim2.new(0.5, -50, 0.2, 0)
+AvatarImage.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+AvatarImage.Parent = LoginFrame
+
+local AvatarCorner = Instance.new("UICorner")
+AvatarCorner.CornerRadius = UDim.new(1, 0)
+AvatarCorner.Parent = AvatarImage
+
+pcall(function()
+    local content = Players:GetUserThumbnailAsync(
+        LocalPlayer.UserId, 
+        Enum.ThumbnailType.HeadShot, 
+        Enum.ThumbnailSize.Size150x150
+    )
+    AvatarImage.Image = content
+end)
+
+local UserLabel = Instance.new("TextLabel")
+UserLabel.Size = UDim2.new(1, 0, 0, 30)
+UserLabel.Position = UDim2.new(0, 0, 0.48, 0)
+UserLabel.BackgroundTransparency = 1
+UserLabel.Text = "مرحباً: " .. LocalPlayer.Name
+UserLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+UserLabel.TextSize = 16
+UserLabel.Font = Enum.Font.GothamMedium
+UserLabel.Parent = LoginFrame
+
+local RightsLabel = Instance.new("TextLabel")
+RightsLabel.Size = UDim2.new(1, 0, 0, 25)
+RightsLabel.Position = UDim2.new(0, 0, 0.56, 0)
+RightsLabel.BackgroundTransparency = 1
+RightsLabel.Text = "إبراهيم الفضل | RTX"
+RightsLabel.TextColor3 = Color3.fromRGB(0, 255, 170)
+RightsLabel.TextSize = 14
+RightsLabel.Font = Enum.Font.GothamBold
+RightsLabel.Parent = LoginFrame
+
+local LoginButton = Instance.new("TextButton")
+LoginButton.Size = UDim2.new(0.8, 0, 0, 45)
+LoginButton.Position = UDim2.new(0.1, 0, 0.75, 0)
+LoginButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+LoginButton.Text = "دخول السكربت"
+LoginButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoginButton.TextSize = 18
+LoginButton.Font = Enum.Font.GothamBold
+LoginButton.Parent = LoginFrame
+
+local BtnCorner = Instance.new("UICorner")
+BtnCorner.CornerRadius = UDim.new(0, 10)
+BtnCorner.Parent = LoginButton
+
+-- ================= ================= =================
+-- 2. القائمة الرئيسية
+-- ================= ================= =================
+
+local ScriptFrame = Instance.new("Frame")
+ScriptFrame.Name = "MainScriptFrame"
+ScriptFrame.Size = UDim2.new(0, 440, 0, 520)
+ScriptFrame.Position = UDim2.new(0.5, -220, 0.5, -260)
+ScriptFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 18)
+ScriptFrame.BorderSizePixel = 0
+ScriptFrame.Visible = false
+ScriptFrame.Active = true
+ScriptFrame.Draggable = true
+ScriptFrame.Parent = MainGui
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 16)
+MainCorner.Parent = ScriptFrame
+
+local MainStroke = Instance.new("UIStroke")
+MainStroke.Color = Color3.fromRGB(0, 255, 170)
+MainStroke.Thickness = 2
+MainStroke.Parent = ScriptFrame
+
+local Header = Instance.new("TextLabel")
+Header.Size = UDim2.new(1, 0, 0, 45)
+Header.BackgroundTransparency = 1
+Header.Text = "سكربت ماب الكيبورد | RTX Auto Farm"
+Header.TextColor3 = Color3.fromRGB(0, 255, 170)
+Header.TextSize = 18
+Header.Font = Enum.Font.GothamBold
+Header.Parent = ScriptFrame
+
+local Scroll = Instance.new("ScrollingFrame")
+Scroll.Size = UDim2.new(0.92, 0, 0.78, 0)
+Scroll.Position = UDim2.new(0.04, 0, 0.1, 0)
+Scroll.BackgroundTransparency = 1
+Scroll.BorderSizePixel = 0
+Scroll.CanvasSize = UDim2.new(0, 0, 2.2, 0)
+Scroll.ScrollBarThickness = 6
+Scroll.Parent = ScriptFrame
+
+local UIList = Instance.new("UIListLayout")
+UIList.Padding = UDim.new(0, 8)
+UIList.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIList.Parent = Scroll
+
+local function CreateButton(text, color, callback)
+    local Btn = Instance.new("TextButton")
+    Btn.Size = UDim2.new(1, -10, 0, 40)
+    Btn.BackgroundColor3 = color or Color3.fromRGB(22, 22, 32)
+    Btn.Text = text
+    Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Btn.TextSize = 14
+    Btn.Font = Enum.Font.GothamMedium
+    Btn.Parent = Scroll
+
+    local Corner = Instance.new("UICorner")
+    Corner.CornerRadius = UDim.new(0, 8)
+    Corner.Parent = Btn
+
+    Btn.MouseButton1Click:Connect(callback)
+    return Btn
+end
+
+-- ================= ================= =================
+-- 3. نظام التختيم الذكي (Auto Farm / Fly Walk)
+-- ================= ================= =================
+
+local AutoFarmActive = false
+
+-- تفعيل النوكليب وإلغاء التصادم مع الحيوانات والعقبات
+local function EnableGodMode()
+    if LocalPlayer.Character then
+        for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.CanCollide = false
+            end
+        end
+    end
+end
+
+-- دالة التختيم التلقائي بالتحليق الذكي
+CreateButton("🤖 تفعيل التختيم التلقائي الذكي (Auto Farm)", Color3.fromRGB(0, 170, 100), function()
+    AutoFarmActive = not AutoFarmActive
+    
+    if AutoFarmActive then
+        task.spawn(function()
+            while AutoFarmActive do
+                EnableGodMode()
+                
+                local char = LocalPlayer.Character
+                if char and char:FindFirstChild("HumanoidRootPart") then
+                    local hrp = char.HumanoidRootPart
+                    
+                    -- البحث عن نقاط الكيبورد/الأزرار/الترتيب
+                    local stages = Workspace:FindFirstChild("Stages") or Workspace:FindFirstChild("Buttons") or Workspace:FindFirstChild("Keyboard") or Workspace
+                    local targets = {}
+                    
+                    for _, child in pairs(stages:GetChildren()) do
+                        if child:IsA("BasePart") or child:IsA("Model") then
+                            table.insert(targets, child)
+                        end
+                    end
+                    
+                    -- التحريك الفخم المرتفع فوق الأرض لتفادي الحيوانات والسرعة الفائقة
+                    for _, target in ipairs(targets) do
+                        if not AutoFarmActive then break end
+                        
+                        local targetCFrame = target:IsA("Model") and target:GetPrimaryPartCFrame() or target.CFrame
+                        if targetCFrame then
+                            -- ارتفاع 5 أمتار عن الأرض لعدم لمس الأعداء
+                            local safeCFrame = targetCFrame + Vector3.new(0, 5, 0)
+                            
+                            -- سلاسة الحركة والالتفات تلقائياً للنقطة التالية
+                            local tweenInfo = TweenInfo.new(0.4, Enum.EasingStyle.Linear)
+                            local tween = TweenService:Create(hrp, tweenInfo, {CFrame = safeCFrame})
+                            tween:Play()
+                            tween.Completed:Wait()
+                        end
+                    end
+                end
+                task.wait(0.5)
+            end
+        end)
+    end
+end)
+
+-- خيار إيقاف التختيم الذكي
+CreateButton("⛔ إيقاف التختيم الذكي", Color3.fromRGB(150, 40, 40), function()
+    AutoFarmActive = false
+end)
+
+-- ================= ================= =================
+-- 4. المزايا الإضافية
+-- ================= ================= =================
+
+-- [1] عدم الموت مطلقاً (GodMode Anti-Damage)
+CreateButton("🛡️ تفعيل الحماية من الموت (God Mode)", Color3.fromRGB(40, 40, 60), function()
+    RunService.Stepped:Connect(function()
+        if LocalPlayer.Character then
+            for _, v in pairs(LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("BasePart") then
+                    v.CanCollide = false
+                end
+            end
+        end
+    end)
+end)
+
+-- [2] التحكم بالسرعة الفائقة
+CreateButton("🚀 سرعة خارقة (100)", Color3.fromRGB(35, 35, 50), function()
+    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+        LocalPlayer.Character.Humanoid.WalkSpeed = 100
+    end
+end)
+
+-- [3] إضاءة الماب
+CreateButton("💡 إضاءة الماب بالكامل (Fullbright)", Color3.fromRGB(180, 150, 0), function()
+    local Light = game:GetService("Lighting")
+    Light.Brightness = 3
+    Light.ClockTime = 14
+    Light.GlobalShadows = false
+    Light.Ambient = Color3.fromRGB(255, 255, 255)
+end)
+
+-- [4] إخفاء القائمة
+CreateButton("🔴 إخفاء القائمة", Color3.fromRGB(120, 30, 30), function()
+    ScriptFrame.Visible = false
+end)
+
+-- ================= ================= =================
+-- 5. زر RTX الخارجي
+-- ================= ================= =================
+
+local ToggleBtn = Instance.new("TextButton")
+ToggleBtn.Name = "RTX_ToggleBtn"
+ToggleBtn.Size = UDim2.new(0, 55, 0, 55)
+ToggleBtn.Position = UDim2.new(0.02, 0, 0.45, 0)
+ToggleBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
+ToggleBtn.Text = "RTX"
+ToggleBtn.TextColor3 = Color3.fromRGB(0, 255, 170)
+ToggleBtn.TextSize = 16
+ToggleBtn.Font = Enum.Font.GothamBold
+ToggleBtn.Active = true
+ToggleBtn.Draggable = true
+ToggleBtn.Parent = MainGui
+
+local ToggleCorner = Instance.new("UICorner")
+ToggleCorner.CornerRadius = UDim.new(1, 0)
+ToggleCorner.Parent = ToggleBtn
+
+local ToggleStroke = Instance.new("UIStroke")
+ToggleStroke.Color = Color3.fromRGB(0, 255, 170)
+ToggleStroke.Thickness = 2
+ToggleStroke.Parent = ToggleBtn
+
+ToggleBtn.MouseButton1Click:Connect(function()
+    ScriptFrame.Visible = not ScriptFrame.Visible
+end)
+
+-- حقوق الأسفل
+local Footer = Instance.new("TextLabel")
+Footer.Size = UDim2.new(1, 0, 0, 30)
+Footer.Position = UDim2.new(0, 0, 0.93, 0)
+Footer.BackgroundTransparency = 1
+Footer.Text = "الحقوق الرسمية: إبراهيم الفضل | RTX"
+Footer.TextColor3 = Color3.fromRGB(0, 255, 170)
+Footer.TextSize = 12
+Footer.Font = Enum.Font.GothamBold
+Footer.Parent = ScriptFrame
+
+-- ================= ================= =================
+-- 6. تفعيل شاشة الدخول
+-- ================= ================= =================
+
+LoginButton.MouseButton1Click:Connect(function()
+    TweenService:Create(LoginFrame, TweenInfo.new(0.4), {BackgroundTransparency = 1}):Play()
+    LoginFrame.Visible = false
+    ScriptFrame.Visible = true
+end)
