@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قطاع اللواء مشعل - بوابة الدخول</title>
+    <title>قطاع اللواء مشعل</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,220 +13,93 @@
         }
 
         body {
-            background-color: #ffffff;
-            color: #000000;
+            background-color: #0b0f19;
+            color: #e2e8f0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px;
         }
 
         .container {
-            background: #ffffff;
-            border: 2px solid #000000;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-top: 4px solid #d4af37;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             width: 100%;
-            max-width: 420px;
+            max-width: 480px;
             padding: 35px;
-            border-radius: 12px;
+            border-radius: 8px;
+            text-align: center;
         }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #000000;
+        h1 {
+            color: #f8fafc;
             font-size: 24px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
         }
 
-        .tabs {
-            display: flex;
+        .divider {
+            height: 2px;
+            background: #d4af37;
+            width: 60px;
+            margin: 0 auto 20px auto;
+        }
+
+        .info-box {
+            background: #1a2332;
+            border: 1px solid #243044;
+            border-radius: 6px;
+            padding: 20px;
             margin-bottom: 25px;
-            border-bottom: 2px solid #e5e7eb;
-        }
-
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 12px;
-            cursor: pointer;
-            color: #6b7280;
-            font-weight: 700;
-            transition: 0.2s;
-        }
-
-        .tab.active {
-            color: #000000;
-            border-bottom: 2px solid #000000;
-            margin-bottom: -2px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
+            text-align: right;
+            line-height: 1.8;
             font-size: 14px;
-            color: #374151;
-            font-weight: 600;
+            color: #cbd5e1;
         }
 
-        input {
-            width: 100%;
-            padding: 14px;
-            background: #f9fafb;
-            border: 1.5px solid #d1d5db;
-            border-radius: 8px;
-            color: #000000;
-            font-size: 15px;
-            outline: none;
-            transition: 0.2s;
+        .info-box p {
+            margin-bottom: 10px;
         }
 
-        input:focus {
-            border-color: #000000;
-            background: #ffffff;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 14px;
-            background: #000000;
-            color: #ffffff;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.2s;
-        }
-
-        .btn:hover {
-            background: #374151;
-        }
-
-        .form-section {
-            display: none;
-        }
-
-        .form-section.active {
-            display: block;
-        }
-
-        #telegram-view {
-            display: none;
-            text-align: center;
-        }
-
-        .telegram-card {
-            background: #f9fafb;
-            border: 1.5px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 30px 20px;
-            margin-top: 15px;
+        .info-box p:last-child {
+            margin-bottom: 0;
         }
 
         .telegram-btn {
             display: block;
-            background: #000000;
+            background: #229ed9;
             color: #ffffff;
             text-decoration: none;
             padding: 14px 20px;
-            border-radius: 8px;
-            font-weight: 700;
+            border-radius: 4px;
+            font-weight: bold;
             font-size: 16px;
-            margin-top: 20px;
+            transition: 0.3s;
             text-align: center;
-            transition: 0.2s;
         }
 
         .telegram-btn:hover {
-            background: #374151;
-        }
-
-        .success-msg {
-            color: #059669;
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 12px;
+            background: #1d8bc0;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- نماذج تسجيل الدخول وإنشاء الحساب -->
-        <div id="auth-view">
-            <h2>قطاع اللواء مشعل</h2>
-            <div class="tabs">
-                <div class="tab active" onclick="switchTab('login')">تسجيل دخول</div>
-                <div class="tab" onclick="switchTab('register')">إنشاء حساب</div>
-            </div>
+        <h1>قطاع اللواء مشعل</h1>
+        <div class="divider"></div>
 
-            <!-- نموذج تسجيل الدخول -->
-            <div id="login-form" class="form-section active">
-                <div class="form-group">
-                    <label>اسم المستخدم</label>
-                    <input type="text" placeholder="أدخل اسم المستخدم">
-                </div>
-                <div class="form-group">
-                    <label>كلمة المرور</label>
-                    <input type="password" placeholder="أدخل كلمة المرور">
-                </div>
-                <button class="btn" onclick="submitAuth()">دخول</button>
-            </div>
-
-            <!-- نموذج إنشاء حساب -->
-            <div id="register-form" class="form-section">
-                <div class="form-group">
-                    <label>اسم المستخدم الجديد</label>
-                    <input type="text" placeholder="اختر اسم مستخدم">
-                </div>
-                <div class="form-group">
-                    <label>كلمة المرور</label>
-                    <input type="password" placeholder="أنشئ كلمة مرور">
-                </div>
-                <button class="btn" onclick="submitAuth()">تسجيل حساب</button>
-            </div>
+        <div class="info-box">
+            <p><strong>مجال القطاع:</strong> العمليات العسكرية الميدانية وتطبيق الأنظمة بكفاءة واحترافية عالية.</p>
+            <p><strong>المهام والتعليمات:</strong> الالتزام بالدامات الرسمية، تنفيذ الأوامر بدقة، والحفاظ على الانضباط العسكري داخل الميدان.</p>
+            <p><strong>التوجيهات:</strong> يُمنع منعاً باتاً التهاون في الأوقات الرسمية؛ العمل جماعي والهدف حماية أمن القطاع ورفع كفاءة الأفراد.</p>
         </div>
 
-        <!-- واجهة قناة التلجرام بعد الدخول -->
-        <div id="telegram-view">
-            <h2>بوابة القيادة</h2>
-            <div class="telegram-card">
-                <p class="success-msg">تم التحقق بنجاح</p>
-                <p style="font-size: 14px; color: #4b5563; margin-bottom: 10px; line-height: 1.5;">انضم لقناة التلجرام الرسمية للمتابعة:</p>
-                <a href="https://t.me/+NGeDAZPVE2AxZWM8" target="_blank" class="telegram-btn">انضم لقناة التلجرام</a>
-            </div>
-        </div>
+        <a href="https://t.me/+NGeDAZPVE2AxZWM8" target="_blank" class="telegram-btn">انضم لقناة التلجرام الرسمية</a>
     </div>
-
-    <script>
-        function switchTab(tabName) {
-            const tabs = document.querySelectorAll('.tab');
-            const forms = document.querySelectorAll('.form-section');
-
-            tabs.forEach(t => t.classList.remove('active'));
-            forms.forEach(f => f.classList.remove('active'));
-
-            if (tabName === 'login') {
-                tabs[0].classList.add('active');
-                document.getElementById('login-form').classList.add('active');
-            } else {
-                tabs[1].classList.add('active');
-                document.getElementById('register-form').classList.add('active');
-            }
-        }
-
-        function submitAuth() {
-            document.getElementById('auth-view').style.display = 'none';
-            document.getElementById('telegram-view').style.display = 'block';
-        }
-    </script>
 
 </body>
 </html>
