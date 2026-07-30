@@ -1,324 +1,241 @@
--- ================= ================= =================
--- سكربت ماب الكيبورد - التختيم الذكي التلقائي (Auto Farm)
--- الحقوق الرسمية: إبراهيم الفضل | RTX
--- ================= ================= =================
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قطاع اللواء مشعل - بوابة الدخول</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
-local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
-local Workspace = game:GetService("Workspace")
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
 
-local LocalPlayer = Players.LocalPlayer
-local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+        .container {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-top: 4px solid #d4af37;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 420px;
+            padding: 30px;
+            border-radius: 8px;
+            position: relative;
+        }
 
--- إنشاء الواجهة الرئيسية
-local MainGui = Instance.new("ScreenGui")
-MainGui.Name = "RTX_KeyboardScript_Smart"
-MainGui.ResetOnSpawn = false
-MainGui.Parent = PlayerGui
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #f8fafc;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
 
--- ================= ================= =================
--- 1. شاشة تسجيل الدخول الفخمة
--- ================= ================= =================
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #1f2937;
+        }
 
-local LoginFrame = Instance.new("Frame")
-LoginFrame.Name = "LoginFrame"
-LoginFrame.Size = UDim2.new(0, 380, 0, 440)
-LoginFrame.Position = UDim2.new(0.5, -190, 0.5, -220)
-LoginFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
-LoginFrame.BorderSizePixel = 0
-LoginFrame.Parent = MainGui
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            color: #94a3b8;
+            font-weight: bold;
+            transition: 0.3s;
+        }
 
-local LoginCorner = Instance.new("UICorner")
-LoginCorner.CornerRadius = UDim.new(0, 16)
-LoginCorner.Parent = LoginFrame
+        .tab.active {
+            color: #d4af37;
+            border-bottom: 2px solid #d4af37;
+        }
 
-local LoginStroke = Instance.new("UIStroke")
-LoginStroke.Color = Color3.fromRGB(0, 200, 255)
-LoginStroke.Thickness = 2
-LoginStroke.Parent = LoginFrame
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-local TitleLabel = Instance.new("TextLabel")
-TitleLabel.Size = UDim2.new(1, 0, 0, 50)
-TitleLabel.BackgroundTransparency = 1
-TitleLabel.Text = "نظام التحقق | RTX SYSTEM"
-TitleLabel.TextColor3 = Color3.fromRGB(0, 200, 255)
-TitleLabel.TextSize = 20
-TitleLabel.Font = Enum.Font.GothamBold
-TitleLabel.Parent = LoginFrame
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #cbd5e1;
+        }
 
-local AvatarImage = Instance.new("ImageLabel")
-AvatarImage.Size = UDim2.new(0, 100, 0, 100)
-AvatarImage.Position = UDim2.new(0.5, -50, 0.2, 0)
-AvatarImage.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
-AvatarImage.Parent = LoginFrame
+        input {
+            width: 100%;
+            padding: 12px;
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
 
-local AvatarCorner = Instance.new("UICorner")
-AvatarCorner.CornerRadius = UDim.new(1, 0)
-AvatarCorner.Parent = AvatarImage
+        input:focus {
+            border-color: #d4af37;
+        }
 
-pcall(function()
-    local content = Players:GetUserThumbnailAsync(
-        LocalPlayer.UserId, 
-        Enum.ThumbnailType.HeadShot, 
-        Enum.ThumbnailSize.Size150x150
-    )
-    AvatarImage.Image = content
-end)
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #d4af37;
+            color: #0b0f19;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
 
-local UserLabel = Instance.new("TextLabel")
-UserLabel.Size = UDim2.new(1, 0, 0, 30)
-UserLabel.Position = UDim2.new(0, 0, 0.48, 0)
-UserLabel.BackgroundTransparency = 1
-UserLabel.Text = "مرحباً: " .. LocalPlayer.Name
-UserLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-UserLabel.TextSize = 16
-UserLabel.Font = Enum.Font.GothamMedium
-UserLabel.Parent = LoginFrame
+        .btn:hover {
+            background: #e6c547;
+        }
 
-local RightsLabel = Instance.new("TextLabel")
-RightsLabel.Size = UDim2.new(1, 0, 0, 25)
-RightsLabel.Position = UDim2.new(0, 0, 0.56, 0)
-RightsLabel.BackgroundTransparency = 1
-RightsLabel.Text = "إبراهيم الفضل | RTX"
-RightsLabel.TextColor3 = Color3.fromRGB(0, 255, 170)
-RightsLabel.TextSize = 14
-RightsLabel.Font = Enum.Font.GothamBold
-RightsLabel.Parent = LoginFrame
+        .form-section {
+            display: none;
+        }
 
-local LoginButton = Instance.new("TextButton")
-LoginButton.Size = UDim2.new(0.8, 0, 0, 45)
-LoginButton.Position = UDim2.new(0.1, 0, 0.75, 0)
-LoginButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-LoginButton.Text = "دخول السكربت"
-LoginButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-LoginButton.TextSize = 18
-LoginButton.Font = Enum.Font.GothamBold
-LoginButton.Parent = LoginFrame
+        .form-section.active {
+            display: block;
+        }
 
-local BtnCorner = Instance.new("UICorner")
-BtnCorner.CornerRadius = UDim.new(0, 10)
-BtnCorner.Parent = LoginButton
+        /* واجهة التلجرام بعد تسجيل الدخول */
+        #telegram-view {
+            display: none;
+            text-align: center;
+        }
 
--- ================= ================= =================
--- 2. القائمة الرئيسية
--- ================= ================= =================
+        .telegram-card {
+            background: #1a2332;
+            border: 1px solid #243044;
+            border-radius: 6px;
+            padding: 25px;
+            margin-top: 15px;
+        }
 
-local ScriptFrame = Instance.new("Frame")
-ScriptFrame.Name = "MainScriptFrame"
-ScriptFrame.Size = UDim2.new(0, 440, 0, 520)
-ScriptFrame.Position = UDim2.new(0.5, -220, 0.5, -260)
-ScriptFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 18)
-ScriptFrame.BorderSizePixel = 0
-ScriptFrame.Visible = false
-ScriptFrame.Active = true
-ScriptFrame.Draggable = true
-ScriptFrame.Parent = MainGui
+        .telegram-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #229ed9;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 20px;
+            width: 100%;
+            transition: 0.3s;
+        }
 
-local MainCorner = Instance.new("UICorner")
-MainCorner.CornerRadius = UDim.new(0, 16)
-MainCorner.Parent = ScriptFrame
+        .telegram-btn:hover {
+            background: #1d8bc0;
+        }
 
-local MainStroke = Instance.new("UIStroke")
-MainStroke.Color = Color3.fromRGB(0, 255, 170)
-MainStroke.Thickness = 2
-MainStroke.Parent = ScriptFrame
+        .success-msg {
+            color: #10b981;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
 
-local Header = Instance.new("TextLabel")
-Header.Size = UDim2.new(1, 0, 0, 45)
-Header.BackgroundTransparency = 1
-Header.Text = "سكربت ماب الكيبورد | RTX Auto Farm"
-Header.TextColor3 = Color3.fromRGB(0, 255, 170)
-Header.TextSize = 18
-Header.Font = Enum.Font.GothamBold
-Header.Parent = ScriptFrame
+    <div class="container" id="main-container">
+        <!-- نموذج تسجيل الدخول / إنشاء حساب -->
+        <div id="auth-view">
+            <h2>قطاع اللواء مشعل</h2>
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('login')">تسجيل دخول</div>
+                <div class="tab" onclick="switchTab('register')">إنشاء حساب</div>
+            </div>
 
-local Scroll = Instance.new("ScrollingFrame")
-Scroll.Size = UDim2.new(0.92, 0, 0.78, 0)
-Scroll.Position = UDim2.new(0.04, 0, 0.1, 0)
-Scroll.BackgroundTransparency = 1
-Scroll.BorderSizePixel = 0
-Scroll.CanvasSize = UDim2.new(0, 0, 2.2, 0)
-Scroll.ScrollBarThickness = 6
-Scroll.Parent = ScriptFrame
+            <!-- نموذج تسجيل الدخول -->
+            <div id="login-form" class="form-section active">
+                <div class="form-group">
+                    <label>اسم المستخدم العسكري</label>
+                    <input type="text" id="login-user" placeholder="أدخل اسم المستخدم">
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="login-pass" placeholder="أدخل كلمة المرور">
+                </div>
+                <button class="btn" onclick="submitAuth()">دخول</button>
+            </div>
 
-local UIList = Instance.new("UIListLayout")
-UIList.Padding = UDim.new(0, 8)
-UIList.HorizontalAlignment = Enum.HorizontalAlignment.Center
-UIList.Parent = Scroll
+            <!-- نموذج إنشاء حساب -->
+            <div id="register-form" class="form-section">
+                <div class="form-group">
+                    <label>اسم المستخدم الجديد</label>
+                    <input type="text" id="reg-user" placeholder="اختر اسم مستخدم">
+                </div>
+                <div class="form-group">
+                    <label>الرتبة / المعرف</label>
+                    <input type="text" id="reg-rank" placeholder="أدخل الرتبة">
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="reg-pass" placeholder="أنشئ كلمة مرور">
+                </div>
+                <button class="btn" onclick="submitAuth()">تسجيل حساب</button>
+            </div>
+        </div>
 
-local function CreateButton(text, color, callback)
-    local Btn = Instance.new("TextButton")
-    Btn.Size = UDim2.new(1, -10, 0, 40)
-    Btn.BackgroundColor3 = color or Color3.fromRGB(22, 22, 32)
-    Btn.Text = text
-    Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Btn.TextSize = 14
-    Btn.Font = Enum.Font.GothamMedium
-    Btn.Parent = Scroll
-
-    local Corner = Instance.new("UICorner")
-    Corner.CornerRadius = UDim.new(0, 8)
-    Corner.Parent = Btn
-
-    Btn.MouseButton1Click:Connect(callback)
-    return Btn
-end
-
--- ================= ================= =================
--- 3. نظام التختيم الذكي (Auto Farm / Fly Walk)
--- ================= ================= =================
-
-local AutoFarmActive = false
-
--- تفعيل النوكليب وإلغاء التصادم مع الحيوانات والعقبات
-local function EnableGodMode()
-    if LocalPlayer.Character then
-        for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
-            if part:IsA("BasePart") then
-                part.CanCollide = false
-            end
-        end
-    end
-end
-
--- دالة التختيم التلقائي بالتحليق الذكي
-CreateButton("🤖 تفعيل التختيم التلقائي الذكي (Auto Farm)", Color3.fromRGB(0, 170, 100), function()
-    AutoFarmActive = not AutoFarmActive
-    
-    if AutoFarmActive then
-        task.spawn(function()
-            while AutoFarmActive do
-                EnableGodMode()
+        <!-- واجهة قناة التلجرام التي تظهر بعد التسجيل -->
+        <div id="telegram-view">
+            <h2>بوابة القيادة</h2>
+            <div class="telegram-card">
+                <p class="success-msg">تم التحقق بنجاح والانضمام للنظام العسكري.</p>
+                <p style="font-size: 14px; color: #94a3b8; margin-bottom: 10px;">للاطلاع على الأوامر العسكرية والتبليغات، يرجى الانضمام لقناة التلجرام الرسمية:</p>
                 
-                local char = LocalPlayer.Character
-                if char and char:FindFirstChild("HumanoidRootPart") then
-                    local hrp = char.HumanoidRootPart
-                    
-                    -- البحث عن نقاط الكيبورد/الأزرار/الترتيب
-                    local stages = Workspace:FindFirstChild("Stages") or Workspace:FindFirstChild("Buttons") or Workspace:FindFirstChild("Keyboard") or Workspace
-                    local targets = {}
-                    
-                    for _, child in pairs(stages:GetChildren()) do
-                        if child:IsA("BasePart") or child:IsA("Model") then
-                            table.insert(targets, child)
-                        end
-                    end
-                    
-                    -- التحريك الفخم المرتفع فوق الأرض لتفادي الحيوانات والسرعة الفائقة
-                    for _, target in ipairs(targets) do
-                        if not AutoFarmActive then break end
-                        
-                        local targetCFrame = target:IsA("Model") and target:GetPrimaryPartCFrame() or target.CFrame
-                        if targetCFrame then
-                            -- ارتفاع 5 أمتار عن الأرض لعدم لمس الأعداء
-                            local safeCFrame = targetCFrame + Vector3.new(0, 5, 0)
-                            
-                            -- سلاسة الحركة والالتفات تلقائياً للنقطة التالية
-                            local tweenInfo = TweenInfo.new(0.4, Enum.EasingStyle.Linear)
-                            local tween = TweenService:Create(hrp, tweenInfo, {CFrame = safeCFrame})
-                            tween:Play()
-                            tween.Completed:Wait()
-                        end
-                    end
-                end
-                task.wait(0.5)
-            end
-        end)
-    end
-end)
+                <a href="https://t.me/+NGeDAZPVE2AxZWM8" target="_blank" class="telegram-btn">
+                    <span>انضم لقناة التلجرام</span>
+                </a>
+            </div>
+        </div>
+    </div>
 
--- خيار إيقاف التختيم الذكي
-CreateButton("⛔ إيقاف التختيم الذكي", Color3.fromRGB(150, 40, 40), function()
-    AutoFarmActive = false
-end)
+    <script>
+        function switchTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            const forms = document.querySelectorAll('.form-section');
 
--- ================= ================= =================
--- 4. المزايا الإضافية
--- ================= ================= =================
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
 
--- [1] عدم الموت مطلقاً (GodMode Anti-Damage)
-CreateButton("🛡️ تفعيل الحماية من الموت (God Mode)", Color3.fromRGB(40, 40, 60), function()
-    RunService.Stepped:Connect(function()
-        if LocalPlayer.Character then
-            for _, v in pairs(LocalPlayer.Character:GetDescendants()) do
-                if v:IsA("BasePart") then
-                    v.CanCollide = false
-                end
-            end
-        end
-    end)
-end)
+            if (tabName === 'login') {
+                tabs[0].classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('register-form').classList.add('active');
+            }
+        }
 
--- [2] التحكم بالسرعة الفائقة
-CreateButton("🚀 سرعة خارقة (100)", Color3.fromRGB(35, 35, 50), function()
-    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
-        LocalPlayer.Character.Humanoid.WalkSpeed = 100
-    end
-end)
+        function submitAuth() {
+            // إخفاء نموذج الدخول وإظهار واجهة أيقونة تلجرام الانضمام
+            document.getElementById('auth-view').style.display = 'none';
+            document.getElementById('telegram-view').style.display = 'block';
+        }
+    </script>
 
--- [3] إضاءة الماب
-CreateButton("💡 إضاءة الماب بالكامل (Fullbright)", Color3.fromRGB(180, 150, 0), function()
-    local Light = game:GetService("Lighting")
-    Light.Brightness = 3
-    Light.ClockTime = 14
-    Light.GlobalShadows = false
-    Light.Ambient = Color3.fromRGB(255, 255, 255)
-end)
-
--- [4] إخفاء القائمة
-CreateButton("🔴 إخفاء القائمة", Color3.fromRGB(120, 30, 30), function()
-    ScriptFrame.Visible = false
-end)
-
--- ================= ================= =================
--- 5. زر RTX الخارجي
--- ================= ================= =================
-
-local ToggleBtn = Instance.new("TextButton")
-ToggleBtn.Name = "RTX_ToggleBtn"
-ToggleBtn.Size = UDim2.new(0, 55, 0, 55)
-ToggleBtn.Position = UDim2.new(0.02, 0, 0.45, 0)
-ToggleBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
-ToggleBtn.Text = "RTX"
-ToggleBtn.TextColor3 = Color3.fromRGB(0, 255, 170)
-ToggleBtn.TextSize = 16
-ToggleBtn.Font = Enum.Font.GothamBold
-ToggleBtn.Active = true
-ToggleBtn.Draggable = true
-ToggleBtn.Parent = MainGui
-
-local ToggleCorner = Instance.new("UICorner")
-ToggleCorner.CornerRadius = UDim.new(1, 0)
-ToggleCorner.Parent = ToggleBtn
-
-local ToggleStroke = Instance.new("UIStroke")
-ToggleStroke.Color = Color3.fromRGB(0, 255, 170)
-ToggleStroke.Thickness = 2
-ToggleStroke.Parent = ToggleBtn
-
-ToggleBtn.MouseButton1Click:Connect(function()
-    ScriptFrame.Visible = not ScriptFrame.Visible
-end)
-
--- حقوق الأسفل
-local Footer = Instance.new("TextLabel")
-Footer.Size = UDim2.new(1, 0, 0, 30)
-Footer.Position = UDim2.new(0, 0, 0.93, 0)
-Footer.BackgroundTransparency = 1
-Footer.Text = "الحقوق الرسمية: إبراهيم الفضل | RTX"
-Footer.TextColor3 = Color3.fromRGB(0, 255, 170)
-Footer.TextSize = 12
-Footer.Font = Enum.Font.GothamBold
-Footer.Parent = ScriptFrame
-
--- ================= ================= =================
--- 6. تفعيل شاشة الدخول
--- ================= ================= =================
-
-LoginButton.MouseButton1Click:Connect(function()
-    TweenService:Create(LoginFrame, TweenInfo.new(0.4), {BackgroundTransparency = 1}):Play()
-    LoginFrame.Visible = false
-    ScriptFrame.Visible = true
-end)
+</body>
+</html>
