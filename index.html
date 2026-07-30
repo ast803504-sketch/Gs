@@ -19,7 +19,6 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
         }
 
         .container {
@@ -31,7 +30,6 @@
             max-width: 420px;
             padding: 30px;
             border-radius: 8px;
-            position: relative;
         }
 
         h2 {
@@ -39,7 +37,6 @@
             margin-bottom: 25px;
             color: #f8fafc;
             font-size: 24px;
-            letter-spacing: 1px;
         }
 
         .tabs {
@@ -55,7 +52,6 @@
             cursor: pointer;
             color: #94a3b8;
             font-weight: bold;
-            transition: 0.3s;
         }
 
         .tab.active {
@@ -83,7 +79,6 @@
             color: #fff;
             font-size: 14px;
             outline: none;
-            transition: 0.3s;
         }
 
         input:focus {
@@ -100,7 +95,6 @@
             font-weight: bold;
             font-size: 16px;
             cursor: pointer;
-            transition: 0.3s;
             margin-top: 10px;
         }
 
@@ -116,7 +110,6 @@
             display: block;
         }
 
-        /* واجهة التلجرام بعد تسجيل الدخول */
         #telegram-view {
             display: none;
             text-align: center;
@@ -131,10 +124,7 @@
         }
 
         .telegram-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            display: block;
             background: #229ed9;
             color: #ffffff;
             text-decoration: none;
@@ -142,8 +132,7 @@
             border-radius: 4px;
             font-weight: bold;
             margin-top: 20px;
-            width: 100%;
-            transition: 0.3s;
+            text-align: center;
         }
 
         .telegram-btn:hover {
@@ -159,8 +148,7 @@
 </head>
 <body>
 
-    <div class="container" id="main-container">
-        <!-- نموذج تسجيل الدخول / إنشاء حساب -->
+    <div class="container">
         <div id="auth-view">
             <h2>قطاع اللواء مشعل</h2>
             <div class="tabs">
@@ -168,47 +156,41 @@
                 <div class="tab" onclick="switchTab('register')">إنشاء حساب</div>
             </div>
 
-            <!-- نموذج تسجيل الدخول -->
             <div id="login-form" class="form-section active">
                 <div class="form-group">
                     <label>اسم المستخدم العسكري</label>
-                    <input type="text" id="login-user" placeholder="أدخل اسم المستخدم">
+                    <input type="text" placeholder="أدخل اسم المستخدم">
                 </div>
                 <div class="form-group">
                     <label>كلمة المرور</label>
-                    <input type="password" id="login-pass" placeholder="أدخل كلمة المرور">
+                    <input type="password" placeholder="أدخل كلمة المرور">
                 </div>
                 <button class="btn" onclick="submitAuth()">دخول</button>
             </div>
 
-            <!-- نموذج إنشاء حساب -->
             <div id="register-form" class="form-section">
                 <div class="form-group">
                     <label>اسم المستخدم الجديد</label>
-                    <input type="text" id="reg-user" placeholder="اختر اسم مستخدم">
+                    <input type="text" placeholder="اختر اسم مستخدم">
                 </div>
                 <div class="form-group">
                     <label>الرتبة / المعرف</label>
-                    <input type="text" id="reg-rank" placeholder="أدخل الرتبة">
+                    <input type="text" placeholder="أدخل الرتبة">
                 </div>
                 <div class="form-group">
                     <label>كلمة المرور</label>
-                    <input type="password" id="reg-pass" placeholder="أنشئ كلمة مرور">
+                    <input type="password" placeholder="أنشئ كلمة مرور">
                 </div>
                 <button class="btn" onclick="submitAuth()">تسجيل حساب</button>
             </div>
         </div>
 
-        <!-- واجهة قناة التلجرام التي تظهر بعد التسجيل -->
         <div id="telegram-view">
             <h2>بوابة القيادة</h2>
             <div class="telegram-card">
                 <p class="success-msg">تم التحقق بنجاح والانضمام للنظام العسكري.</p>
-                <p style="font-size: 14px; color: #94a3b8; margin-bottom: 10px;">للاطلاع على الأوامر العسكرية والتبليغات، يرجى الانضمام لقناة التلجرام الرسمية:</p>
-                
-                <a href="https://t.me/+NGeDAZPVE2AxZWM8" target="_blank" class="telegram-btn">
-                    <span>انضم لقناة التلجرام</span>
-                </a>
+                <p style="font-size: 14px; color: #94a3b8; margin-bottom: 10px;">انضم لقناة التلجرام الرسمية:</p>
+                <a href="https://t.me/+NGeDAZPVE2AxZWM8" target="_blank" class="telegram-btn">انضم لقناة التلجرام</a>
             </div>
         </div>
     </div>
@@ -231,7 +213,6 @@
         }
 
         function submitAuth() {
-            // إخفاء نموذج الدخول وإظهار واجهة أيقونة تلجرام الانضمام
             document.getElementById('auth-view').style.display = 'none';
             document.getElementById('telegram-view').style.display = 'block';
         }
