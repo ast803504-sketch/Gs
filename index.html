@@ -1,31 +1,52 @@
+import phonenumbers
+from phonenumbers import geocoder, carrier, timezone
 import time
 import os
-import random
 import sys
 
-def glitch_effect():
-    messages = [
-        "[!] WARNING: ROOT ACCESS COMPROMISED",
-        "[!] FIRMWARE CORRUPTED - DATA WIPING IN PROGRESS...",
-        "[!] DOWNLOADING ALL CONTACTS AND GALLERY...",
-        "[!] BYPASSING KERNEL SECURITY...",
-        "[!] SYSTEM FAILURE: DEVICE BRICKED."
+def target_phone_recon(phone_number_str):
+    print(f"[*] جاري استخراج بيانات الرقم المستهدف: {phone_number_str} يا بوص...")
+    try:
+        parsed_number = phonenumbers.parse(phone_number_str)
+        if not phonenumbers.is_valid_number(parsed_number):
+            print("[-] الرقم غير صالح أو وهمي يا رئيس.")
+            return False
+            
+        print("\n--- [ النتائج المسحوبة ] ---")
+        print(f"الدولة / المنطقة: {geocoder.description_for_number(parsed_number, 'ar')}")
+        print(f"الشركة المزودة (الشبكة): {carrier.name_for_number(parsed_number, 'ar')}")
+        print(f"المنطقة الزمنية: {timezone.time_zones_for_number(parsed_number)}")
+        return True
+    except Exception as e:
+        print(f"[-] صار خطأ في السحب: {e}")
+        return False
+
+def panic_video_simulation():
+    print("\n[*] جاري تشغيل سيناريو الرعب الفيديوي على جهاز الضحية...")
+    time.sleep(1.5)
+    
+    effects = [
+        "[ALERT] Camera Hack Initiated...",
+        "[ALERT] Microphone Live Streaming to Remote Server...",
+        "[ALERT] GPS Coordinates Captured & Uploaded...",
+        "[FATAL ERROR] System Kernel Overwritten."
     ]
     
-    print("[*] جاري تنفيذ هجوم الاختراق الكامل على الجهاز يا بوص...")
-    time.sleep(2)
-    
-    for i in range(15):
+    for effect in effects:
         os.system('cls' if os.name == 'nt' else 'clear')
-        print("=" * 40)
-        print(f"   [!] SYSTEM BREACH ACTIVE - STATUS: {random.randint(10, 99)}%")
-        print("=" * 40)
-        print(random.choice(messages))
-        print("\n" * 2)
-        print(f"SENDING DATA PACKET #{random.randint(1000, 9999)}...")
-        time.sleep(0.3)
-        
-    print("\n[+] تباً، أجل! تم تدمير النظام والسيطرة على الجوال بنجاح يا رئيس.")
+        print("########################################")
+        print("###    [!] WARNING: DEVICE TAKEOVER    ###")
+        print("########################################\n")
+        print(f">> {effect}")
+        time.sleep(1)
 
 if __name__ == "__main__":
-    glitch_effect()
+    if len(sys.argv) < 2:
+        print("[-] الاستخدام الصح: python tool.py +966xxxxxxxx")
+        sys.exit(1)
+        
+    number = sys.argv[1]
+    if target_phone_recon(number):
+        time.sleep(2)
+        panic_video_simulation()
+        print("\n[+] تباً، أجل! تم سحب الداتا وعرض سيناريو الرعب بنجاح يا رئيس.")
