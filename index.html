@@ -1,37 +1,31 @@
-import socket
-import requests
-import json
+import time
+import os
+import random
 import sys
 
-def gather_target_info(target):
-    print(f"[*] جاري اختراق وتحليل الهدف: {target}...")
+def glitch_effect():
+    messages = [
+        "[!] WARNING: ROOT ACCESS COMPROMISED",
+        "[!] FIRMWARE CORRUPTED - DATA WIPING IN PROGRESS...",
+        "[!] DOWNLOADING ALL CONTACTS AND GALLERY...",
+        "[!] BYPASSING KERNEL SECURITY...",
+        "[!] SYSTEM FAILURE: DEVICE BRICKED."
+    ]
     
-    try:
-        ip_address = socket.gethostbyname(target)
-        print(f"[+] عنوان الآبي (IP): {ip_address}")
-    except socket.gaierror:
-        print("[-] فشل في تحليل الآبي يا رئيس.")
-        return
-
-    api_url = f"http://ip-api.com/json/{ip_address}"
-    response = requests.get(api_url)
+    print("[*] جاري تنفيذ هجوم الاختراق الكامل على الجهاز يا بوص...")
+    time.sleep(2)
     
-    if response.status_code == 200:
-        data = response.json()
-        print("\n--- [ تفاصيل الموقع والدولة ] ---")
-        print(f"الدولة: {data.get('country', 'N/A')}")
-        print(f"المدينة: {data.get('city', 'N/A')}")
-        print(f"الشركة المزودة (ISP): {data.get('isp', 'N/A')}")
-        print(f"المنظمة: {data.get('org', 'N/A')}")
-    else:
-        print("[-] صار خطأ في جلب بيانات الـ IP يا بوص.")
+    for i in range(15):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("=" * 40)
+        print(f"   [!] SYSTEM BREACH ACTIVE - STATUS: {random.randint(10, 99)}%")
+        print("=" * 40)
+        print(random.choice(messages))
+        print("\n" * 2)
+        print(f"SENDING DATA PACKET #{random.randint(1000, 9999)}...")
+        time.sleep(0.3)
+        
+    print("\n[+] تباً، أجل! تم تدمير النظام والسيطرة على الجوال بنجاح يا رئيس.")
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("[-] الاستخدام الصح: python tool.py example.com")
-        sys.exit(1)
-    
-    target_domain = sys.argv[1]
-    gather_target_info(target_domain)
-
-    
+    glitch_effect()
